@@ -33,19 +33,19 @@ jobs:
           when: always
      - run:
           name: Build image
-          command: docker build --tag anthonydevweb/P13-Orange-County-Lettings:$CIRCLE_SHA1 .
+          command: docker build --tag anthonydevweb/p13-orange-county-lettings:$CIRCLE_SHA1 .
           when: always
      - run:
           name: Push image
-          command: docker push anthonydevweb/P13-Orange-County-Lettings:$CIRCLE_SHA1
+          command: docker push anthonydevweb/p13-orange-county-lettings:$CIRCLE_SHA1
           when: always
      - run:
           name: Tag the image as latest
-          command: docker tag anthonydevweb/P13-Orange-County-Lettings:$CIRCLE_SHA1 anthonydevweb/P13-Orange-County-Lettings:latest
+          command: docker tag anthonydevweb/p13-orange-county-lettings:$CIRCLE_SHA1 anthonydevweb/p13-orange-county-lettings:latest
           when: always
      - run:
           name: Push the latest tag
-          command: docker push anthonydevweb/P13-Orange-County-Lettings:latest
+          command: docker push anthonydevweb/p13-orange-county-lettings:latest
           when: always
   deploy-production:
     executor: heroku/default
