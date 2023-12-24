@@ -1,5 +1,4 @@
 import os
-from pprint import pprint
 
 import sentry_sdk
 from django.core.exceptions import ImproperlyConfigured

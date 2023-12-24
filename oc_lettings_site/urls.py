@@ -9,7 +9,7 @@ handler500 = "oc_lettings_site.views.error500"
 
 
 def trigger_error(request):
-    division_by_zero = 1 / 0
+    print(1 / 0)
 
 
 urlpatterns = [
