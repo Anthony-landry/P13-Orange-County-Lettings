@@ -1,0 +1,72 @@
+version: 2.1
+orbs:
+  heroku: circleci/heroku@1.0.1
+jobs:
+  build-and-test:
+    docker:
+      - image: python:3.11-slim
+    steps:
+      - checkout
+      - run:
+          name: LS LA
+          command: ls -la
+          when: always
+      - run:
+          name: Virtual environment
+          command: bash build-env.sh
+          when: always
+      - run:
+          name: Python linting
+          command: source venv/bin/activate && flake8
+          when: always
+      - run:
+          name: Unit tests
+          command: source venv/bin/activate && pytest --cov --reuse-db --no-migrations
+          when: always
+  containerise:
+    machine: true
+    steps:
+     - checkout
+     - run:
+          name: Authenticate to registry
+          command: echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USER" --password-stdin
+          when: always
+     - run:
+          name: Build image
+          command: docker build --tag anthonydevweb/P13-Orange-County-Lettings:$CIRCLE_SHA1 .
+          when: always
+     - run:
+          name: Push image
+          command: docker push anthonydevweb/P13-Orange-County-Lettings:$CIRCLE_SHA1
+          when: always
+     - run:
+          name: Tag the image as latest
+          command: docker tag anthonydevweb/P13-Orange-County-Lettings:$CIRCLE_SHA1 anthonydevweb/P13-Orange-County-Lettings:latest
+          when: always
+     - run:
+          name: Push the latest tag
+          command: docker push anthonydevweb/P13-Orange-County-Lettings:latest
+          when: always
+  deploy-production:
+    executor: heroku/default
+    steps:
+      - checkout
+      - heroku/deploy-via-git
+workflows:
+  build-test-deploy:
+    jobs:
+      - build-and-test
+      - containerise:
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only:
+                - main
+      - deploy-production:
+          requires:
+            - containerise
+          filters:
+            branches:
+              only:
+                - main

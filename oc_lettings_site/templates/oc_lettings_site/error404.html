@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}error 404{% endblock title %}
+
+{% block extrahead %}
+    <link href="{% static 'css/style404.css' %}" rel="stylesheet" />
+{% endblock extrahead %}
+{% block content %}
+
+    <a href="" class="fa fa-arrow-left"></a>
+<div class="error">
+  <h1>404</h1>
+</div>
+
+{% endblock %}

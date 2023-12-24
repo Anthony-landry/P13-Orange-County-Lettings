@@ -1,0 +1,38 @@
+# Ignore la documéntation de Sphinx.
+docs/
+
+# Ignore tout fichier de configuration de l'éditeur
+**/.idea/
+
+# Ignore les fichiers temporaires qui pourraient être générés pendant le développement
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/__pycache__
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.seed
+*.db
+*.dump
+*.log
+.coverage*
+Procfile
+*readme*
+
+# Ignore les dossiers spécifiques au projet et les fichiers cachés
+**/.git
+**/.git**
+**/.env
+**/.venv
+**/.pytest_cache
+**/.vscode
+**/*~
+**/.circleci/
+**/doc/
+**/flake-report/
+**/venv/
+**/*.md
+
